@@ -89,7 +89,7 @@ def speaking_upload():
     newfilename = 'speaking'+ext
     uploaded_file.save(os.path.join(app.root_path, 'static', newfilename))
 
-    o.stt('static\speaking.mp3')
+    o.stt('static/speaking.mp3')
     transcript = open('transcript.txt','r').read()
     dialog = o.segment(transcript)
     result = o.speaking_predictor(dialog)

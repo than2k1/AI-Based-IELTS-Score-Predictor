@@ -1,8 +1,10 @@
-import openai
+from openai import OpenAI
+
+client = OpenAI(api_key = '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')
 
 class ielts:
     def __init__(self):
-        openai.api_key = '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'
+        # openai.api_key = 
 
         self.features= '''Assume that you are an IELTS evaluator.
 Given the question prompt and answer, you give the IELTS score like how humans evaluate, 
@@ -92,8 +94,9 @@ for overall grade:
 }
 '''
     async def predictor(self,question_prompt,answer,wordCount): 
+        self.out_dict = None
         try:
-            self.output = openai.ChatCompletion.create(
+            self.output = client.chat.completions.create(
                 model="gpt-3.5-turbo",
                 # model="text-ada-001",
                 # engine="text-ada-001",
@@ -105,10 +108,10 @@ for overall grade:
                         
                     ]
             ) 
-            self.out_dict = eval(self.output['choices'][0]['message']['content'])
+            self.out_dict = eval(self.output.choices[0].message.content)
         except Exception as e:
             print('oops!')
-            self.predictor(question_prompt,answer)
+            self.predictor(question_prompt,answer,wordCount)
 
         return self.out_dict
 
